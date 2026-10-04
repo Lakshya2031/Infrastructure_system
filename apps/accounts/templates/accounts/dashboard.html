@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center">
+
+    <h1>
+        Welcome,
+        {{ user.first_name|default:user.username }}
+    </h1>
+
+    <p class="text-muted">
+        Public Infrastructure Issue Resolution System
+    </p>
+
+</div>
+
+
+<div class="row justify-content-center mt-5">
+
+    <div class="col-md-8">
+
+        <div class="card shadow">
+
+            <div class="card-body text-center">
+
+                <h2>
+                    {{ dashboard_type }} Dashboard
+                </h2>
+
+                <p class="mt-3">
+
+                    Logged in as:
+
+                    <strong>
+                        {{ user.username }}
+                    </strong>
+
+                </p>
+
+                <p>
+
+                    Role:
+
+                    <strong>
+                        {{ dashboard_type }}
+                    </strong>
+
+                </p>
+
+
+                {% if dashboard_type == "Citizen" %}
+
+                    <p class="text-muted">
+                        Complaint reporting and tracking
+                        will be available here.
+                    </p>
+
+                {% elif dashboard_type == "Supervisor" %}
+
+                    <p class="text-muted">
+                        Complaint review and assignment
+                        will be available here.
+                    </p>
+
+                {% elif dashboard_type == "Technician" %}
+
+                    <p class="text-muted">
+                        Work orders and repair management
+                        will be available here.
+                    </p>
+
+                {% elif dashboard_type == "Inspector" %}
+
+                    <p class="text-muted">
+                        Inspection and quality assurance
+                        will be available here.
+                    </p>
+
+                {% elif dashboard_type == "Administrator" %}
+
+                    <p class="text-muted">
+                        User management and system reports
+                        will be available here.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
