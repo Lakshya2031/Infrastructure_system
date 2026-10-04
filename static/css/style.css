@@ -504,3 +504,280 @@ body {
     }
 
 }
+
+/* =========================================================
+   LOGIN PAGE
+   ========================================================= */
+
+
+/* ---------- Login Background ---------- */
+
+.login-page {
+
+    min-height: calc(100vh - 74px);
+
+    position: relative;
+
+    background-image:
+        url("../images/india-gate.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 50px 20px;
+}
+
+
+/* ---------- Background Overlay ---------- */
+
+.login-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(7, 32, 63, 0.82),
+            rgba(0, 0, 0, 0.48)
+        );
+}
+
+
+/* ---------- Login Container ---------- */
+
+.login-container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 480px;
+}
+
+
+/* ---------- Login Card ---------- */
+
+.login-card {
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border-radius: 18px;
+
+    padding: 42px 45px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.30);
+
+    border-top: 5px solid #ff9933;
+}
+
+
+/* ---------- Login Header ---------- */
+
+.login-header {
+
+    text-align: center;
+
+    margin-bottom: 32px;
+}
+
+
+.login-emblem {
+
+    font-size: 42px;
+
+    margin-bottom: 8px;
+}
+
+
+.login-header h1 {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color: #12355b;
+}
+
+
+.login-header p {
+
+    margin-top: 8px;
+
+    margin-bottom: 0;
+
+    color: #68737d;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* ---------- Login Inputs ---------- */
+
+.login-card input {
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d5dce3;
+
+    border-radius: 8px;
+
+    background: #f8fafc;
+
+    font-size: 15px;
+
+    color: #26384a;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+
+/* ---------- Input Focus ---------- */
+
+.login-card input:focus {
+
+    border-color: #12355b;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 3px rgba(18, 53, 91, 0.10);
+}
+
+
+/* ---------- Login Button ---------- */
+
+.login-button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 13px 20px;
+
+    margin-top: 8px;
+
+    background: #12355b;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.login-button:hover {
+
+    background: #0b2948;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 18px rgba(18, 53, 91, 0.25);
+}
+
+
+/* ---------- Login/Register Link ---------- */
+
+.register-link {
+
+    text-align: center;
+
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e8eb;
+
+    font-size: 14px;
+
+    color: #68737d;
+}
+
+
+.register-link a {
+
+    color: #12355b;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    margin-left: 4px;
+}
+
+
+.register-link a:hover {
+
+    text-decoration: underline;
+}
+
+
+/* ---------- Login Errors ---------- */
+
+.login-card ul.errorlist {
+
+    margin: 6px 0 0;
+
+    padding: 0;
+
+    list-style: none;
+
+    color: #c62828;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LOGIN MOBILE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .login-page {
+
+        padding: 30px 15px;
+    }
+
+
+    .login-card {
+
+        padding: 32px 24px;
+    }
+
+
+    .login-header h1 {
+
+        font-size: 26px;
+    }
+
+}

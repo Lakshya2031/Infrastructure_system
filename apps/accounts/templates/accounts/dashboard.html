@@ -1,34 +1,274 @@
+
 {% extends "base.html" %}
 
 {% block content %}
 
-<div class="text-center">
+<style>
 
-    <h1>
-        Welcome,
-        {{ user.first_name|default:user.username }}
-    </h1>
+    /* ================================
+       DASHBOARD
+       ================================ */
 
-    <p class="text-muted">
-        Public Infrastructure Issue Resolution System
-    </p>
+    .dashboard-page {
+        min-height: calc(100vh - 80px);
+        background: #f5f7fa;
+        padding: 40px 20px;
+    }
 
-</div>
+
+    .dashboard-container {
+        max-width: 1000px;
+        margin: auto;
+    }
 
 
-<div class="row justify-content-center mt-5">
+    /* ================================
+       WELCOME SECTION
+       ================================ */
 
-    <div class="col-md-8">
+    .welcome-card {
+        background: white;
 
-        <div class="card shadow">
+        border-radius: 12px;
 
-            <div class="card-body text-center">
+        padding: 25px 30px;
+
+        margin-bottom: 25px;
+
+        border-left: 5px solid #ff9933;
+
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+
+    .welcome-card h1 {
+        color: #12355b;
+
+        font-size: 28px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .welcome-card p {
+        color: #68737d;
+
+        margin: 0;
+    }
+
+
+    /* ================================
+       MAIN DASHBOARD CARD
+       ================================ */
+
+    .dashboard-card {
+        background: white;
+
+        border-radius: 12px;
+
+        padding: 30px;
+
+        border: 1px solid #e1e6eb;
+
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+
+    .dashboard-card-header {
+        text-align: center;
+
+        padding-bottom: 20px;
+
+        border-bottom: 1px solid #e5e8eb;
+
+        margin-bottom: 25px;
+    }
+
+
+    .dashboard-card-header h2 {
+        color: #12355b;
+
+        font-size: 24px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .dashboard-card-header p {
+        color: #68737d;
+
+        margin: 5px 0;
+    }
+
+
+    /* ================================
+       ROLE BADGE
+       ================================ */
+
+    .role-badge {
+        display: inline-block;
+
+        margin-top: 10px;
+
+        padding: 6px 14px;
+
+        border-radius: 20px;
+
+        background: #eef3f8;
+
+        color: #12355b;
+
+        font-size: 13px;
+
+        font-weight: 600;
+    }
+
+
+    /* ================================
+       ROLE DESCRIPTION
+       ================================ */
+
+    .role-description {
+        text-align: center;
+
+        background: #f8fafc;
+
+        border-radius: 8px;
+
+        padding: 18px;
+
+        color: #68737d;
+
+        font-size: 15px;
+
+        border: 1px solid #e5e8eb;
+    }
+
+
+    /* ================================
+       FUTURE FEATURES
+       ================================ */
+
+    .feature-section {
+        margin-top: 25px;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 15px;
+    }
+
+
+    .feature-card {
+        padding: 18px;
+
+        border: 1px solid #e1e6eb;
+
+        border-radius: 8px;
+
+        background: white;
+
+        text-align: center;
+    }
+
+
+    .feature-card h4 {
+        color: #12355b;
+
+        font-size: 17px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .feature-card p {
+        color: #68737d;
+
+        font-size: 13px;
+
+        margin: 0;
+    }
+
+
+    /* ================================
+       MOBILE
+       ================================ */
+
+    @media (max-width: 700px) {
+
+        .dashboard-page {
+            padding: 25px 15px;
+        }
+
+
+        .welcome-card h1 {
+            font-size: 24px;
+        }
+
+
+        .dashboard-card {
+            padding: 22px;
+        }
+
+
+        .feature-section {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<div class="dashboard-page">
+
+    <div class="dashboard-container">
+
+
+        <!-- ==================================
+             WELCOME
+             ================================== -->
+
+        <div class="welcome-card">
+
+            <h1>
+
+                Welcome,
+                {{ user.first_name|default:user.username }}
+
+            </h1>
+
+            <p>
+                Public Infrastructure Issue Resolution System
+            </p>
+
+        </div>
+
+
+        <!-- ==================================
+             DASHBOARD
+             ================================== -->
+
+        <div class="dashboard-card">
+
+
+            <!-- Header -->
+
+            <div class="dashboard-card-header">
 
                 <h2>
-                    {{ dashboard_type }} Dashboard
+
+                    {{ dashboard_type }}
+                    Dashboard
+
                 </h2>
 
-                <p class="mt-3">
+
+                <p>
 
                     Logged in as:
 
@@ -38,53 +278,214 @@
 
                 </p>
 
-                <p>
+
+                <div class="role-badge">
 
                     Role:
+                    {{ dashboard_type }}
 
-                    <strong>
-                        {{ dashboard_type }}
-                    </strong>
+                </div>
 
-                </p>
+            </div>
+
+
+            <!-- ==================================
+                 ROLE-SPECIFIC DESCRIPTION
+                 ================================== -->
+
+            <div class="role-description">
 
 
                 {% if dashboard_type == "Citizen" %}
 
-                    <p class="text-muted">
-                        Complaint reporting and tracking
-                        will be available here.
-                    </p>
+                    Complaint reporting and tracking
+                    will be available here.
+
 
                 {% elif dashboard_type == "Supervisor" %}
 
-                    <p class="text-muted">
-                        Complaint review and assignment
-                        will be available here.
-                    </p>
+                    Complaint review and assignment
+                    will be available here.
+
 
                 {% elif dashboard_type == "Technician" %}
 
-                    <p class="text-muted">
-                        Work orders and repair management
-                        will be available here.
-                    </p>
+                    Work orders and repair management
+                    will be available here.
+
 
                 {% elif dashboard_type == "Inspector" %}
 
-                    <p class="text-muted">
-                        Inspection and quality assurance
-                        will be available here.
-                    </p>
+                    Inspection and quality assurance
+                    will be available here.
+
 
                 {% elif dashboard_type == "Administrator" %}
 
-                    <p class="text-muted">
-                        User management and system reports
-                        will be available here.
-                    </p>
+                    User management and system reports
+                    will be available here.
+
+
+                {% else %}
+
+                    System functionality will be
+                    available here.
+
 
                 {% endif %}
+
+
+            </div>
+
+
+            <!-- ==================================
+                 FUTURE FEATURES
+                 ================================== -->
+
+            <div class="feature-section">
+
+
+                {% if dashboard_type == "Citizen" %}
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Report Issue
+                        </h4>
+
+                        <p>
+                            Submit infrastructure complaints.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Track Issues
+                        </h4>
+
+                        <p>
+                            Track the status of your complaints.
+                        </p>
+
+                    </div>
+
+
+                {% elif dashboard_type == "Supervisor" %}
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Review Complaints
+                        </h4>
+
+                        <p>
+                            Review submitted complaints.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Assign Work
+                        </h4>
+
+                        <p>
+                            Assign complaints to technicians.
+                        </p>
+
+                    </div>
+
+
+                {% elif dashboard_type == "Technician" %}
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Work Orders
+                        </h4>
+
+                        <p>
+                            View assigned repair work.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Update Status
+                        </h4>
+
+                        <p>
+                            Update the progress of repairs.
+                        </p>
+
+                    </div>
+
+
+                {% elif dashboard_type == "Inspector" %}
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Inspections
+                        </h4>
+
+                        <p>
+                            Manage infrastructure inspections.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <h4>
+                            Quality Assurance
+                        </h4>
+
+                        <p>
+                            Verify completed infrastructure work.
+                        </p>
+
+                    </div>
+
+
+                {% elif dashboard_type == "Administrator" %}
+
+                    <div class="feature-card">
+
+                        <h4>
+                            User Management
+                        </h4>
+
+                        <p>
+                            Manage system users and roles.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <h4>
+                            System Reports
+                        </h4>
+
+                        <p>
+                            View system-level reports.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
 
             </div>
 

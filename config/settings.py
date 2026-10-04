@@ -25,6 +25,7 @@ ALLOWED_HOSTS = [
 # ---------------------------------------------------------
 # APPLICATIONS
 # ---------------------------------------------------------
+
 INSTALLED_APPS = [
     # Django built-in applications
     "django.contrib.admin",
@@ -39,7 +40,9 @@ INSTALLED_APPS = [
 
     # Our applications
     "apps.accounts",
+    "apps.complaints",
 ]
+
 
 # ---------------------------------------------------------
 # MIDDLEWARE
@@ -177,6 +180,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
 # ---------------------------------------------------------
 # CUSTOM USER MODEL
 # ---------------------------------------------------------
@@ -193,6 +197,3 @@ LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/accounts/dashboard/"
 
 LOGOUT_REDIRECT_URL = "/accounts/login/"
-
-AUTH_USER_MODEL = "accounts.User"
-
