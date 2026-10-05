@@ -12,4 +12,9 @@ urlpatterns = [
         "accounts/",
         include("apps.accounts.urls"),
     ),
+
+    path(
+        "complaints/",
+        include("apps.complaints.urls"),
+    ),
 ]
