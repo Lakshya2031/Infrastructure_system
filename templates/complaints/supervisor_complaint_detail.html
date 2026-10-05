@@ -1,0 +1,17 @@
+<div class="mt-4 d-flex justify-content-between">
+
+    <a
+        href="{% url 'complaints:supervisor_complaints' %}"
+        class="btn btn-outline-secondary"
+    >
+        Back to Complaints
+    </a>
+
+    <a
+        href="{% url 'complaints:supervisor_complaint_review' complaint.id %}"
+        class="btn btn-primary"
+    >
+        Review Complaint
+    </a>
+
+</div>

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from .forms import ComplaintForm
+from .forms import ComplaintForm, SupervisorReviewForm
 from .models import Complaint, Location
 
 from apps.accounts.permissions import role_required
@@ -94,5 +94,92 @@ def supervisor_complaints_view(request):
         "complaints/supervisor_complaints.html",
         {
             "complaints": complaints,
+        },
+    )
+
+@login_required
+@role_required("Supervisor")
+def supervisor_complaint_detail_view(request, complaint_id):
+
+    complaint = Complaint.objects.get(
+        id=complaint_id
+    )
+
+    return render(
+        request,
+        "complaints/supervisor_complaint_detail.html",
+        {
+            "complaint": complaint,
+        },
+    )
+
+@login_required
+@role_required("Supervisor")
+def supervisor_complaint_review_view(request, complaint_id):
+
+    complaint = Complaint.objects.get(
+        id=complaint_id
+    )
+
+    if request.method == "POST":
+
+        form = SupervisorReviewForm(
+            request.POST,
+            instance=complaint,
+        )
+
+        if form.is_valid():
+
+            complaint = form.save(
+                commit=False
+            )
+
+            decision = form.cleaned_data["decision"]
+
+            if decision == "continue":
+
+                complaint.status = (
+                    Complaint.Status.SENT_TO_INSPECTOR
+                )
+
+                message = (
+                    "Complaint has been forwarded "
+                    "to the Inspector."
+                )
+
+            else:
+
+                complaint.status = (
+                    Complaint.Status.INSPECTOR_REJECTED
+                )
+
+                message = (
+                    "Complaint has been rejected."
+                )
+
+            complaint.save()
+
+            messages.success(
+                request,
+                message,
+            )
+
+            return redirect(
+                "complaints:supervisor_complaint_detail",
+                complaint_id=complaint.id,
+            )
+
+    else:
+
+        form = SupervisorReviewForm(
+            instance=complaint
+        )
+
+    return render(
+        request,
+        "complaints/supervisor_review.html",
+        {
+            "complaint": complaint,
+            "form": form,
         },
     )

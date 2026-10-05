@@ -26,4 +26,16 @@ urlpatterns = [
         name="supervisor_complaints",
     ),
 
+    path(
+        "supervisor/complaints/<int:complaint_id>/",
+        views.supervisor_complaint_detail_view,
+        name="supervisor_complaint_detail",
+    ),
+
+    path(
+        "supervisor/complaints/<int:complaint_id>/review/",
+        views.supervisor_complaint_review_view,
+        name="supervisor_complaint_review",
+    ),
+
 ]

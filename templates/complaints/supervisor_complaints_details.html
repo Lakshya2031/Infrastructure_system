@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .detail-card {
+        max-width: 1000px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border-top: 4px solid #ff9933;
+    }
+
+    .page-title {
+        color: #12355b;
+        font-weight: 600;
+    }
+
+    .section-title {
+        color: #12355b;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+
+    .info-box {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    .label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .status-badge {
+        background-color: #fff3cd;
+        color: #856404;
+        padding: 6px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .priority-badge {
+        background-color: #e9ecef;
+        color: #333;
+        padding: 6px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+</style>
+
+
+<div class="detail-card">
+
+    <!-- Page Heading -->
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <div>
+            <h2 class="page-title">
+                Complaint #{{ complaint.id }}
+            </h2>
+
+            <p class="text-muted mb-0">
+                Review complaint details submitted by the citizen.
+            </p>
+        </div>
+
+        <div>
+
+            <span class="status-badge">
+                {{ complaint.get_status_display }}
+            </span>
+
+            <span class="priority-badge ms-2">
+                {{ complaint.get_priority_display }}
+            </span>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+
+    <!-- Citizen Information -->
+
+    <div class="section-title">
+        Citizen Information
+    </div>
+
+    <div class="info-box">
+
+        <p class="mb-2">
+            <span class="label">Username:</span>
+            {{ complaint.citizen.username }}
+        </p>
+
+        <p class="mb-0">
+            <span class="label">Email:</span>
+            {{ complaint.citizen.email }}
+        </p>
+
+    </div>
+
+
+    <!-- Issue Information -->
+
+    <div class="section-title">
+        Issue Information
+    </div>
+
+    <div class="info-box">
+
+        <p class="mb-2">
+            <span class="label">Category:</span>
+            {{ complaint.category.name }}
+        </p>
+
+        <p class="mb-0">
+            <span class="label">Description:</span>
+            {{ complaint.description }}
+        </p>
+
+    </div>
+
+
+    <!-- Location Information -->
+
+    <div class="section-title">
+        Location Information
+    </div>
+
+    <div class="info-box">
+
+        <p class="mb-2">
+            <span class="label">Address:</span>
+            {{ complaint.location.address }}
+        </p>
+
+        <p class="mb-0">
+            <span class="label">Coordinates:</span>
+            {{ complaint.location.latitude }},
+            {{ complaint.location.longitude }}
+        </p>
+
+    </div>
+
+
+    <!-- Evidence -->
+
+    <div class="section-title">
+        Evidence
+    </div>
+
+    <div class="info-box">
+
+        {% if complaint.media %}
+
+            <p class="mb-0">
+
+                <strong>Uploaded File:</strong>
+
+                <a
+                    href="{{ complaint.media.url }}"
+                    target="_blank"
+                    class="ms-2"
+                >
+                    View uploaded file
+                </a>
+
+            </p>
+
+        {% else %}
+
+            <p class="text-muted mb-0">
+                No evidence file was uploaded.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Submission Information -->
+
+    <div class="section-title">
+        Submission Information
+    </div>
+
+    <div class="info-box">
+
+        <p class="mb-2">
+            <span class="label">Reported On:</span>
+            {{ complaint.created_at|date:"d M Y, h:i A" }}
+        </p>
+
+        <p class="mb-0">
+            <span class="label">Last Updated:</span>
+            {{ complaint.updated_at|date:"d M Y, h:i A" }}
+        </p>
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <div class="mt-4">
+
+        <a
+            href="{% url 'complaints:supervisor_complaints' %}"
+            class="btn btn-outline-secondary"
+        >
+            Back to Complaints
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

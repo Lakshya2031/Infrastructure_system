@@ -77,3 +77,33 @@ class ComplaintForm(forms.ModelForm):
             )
 
         return category
+
+class SupervisorReviewForm(forms.ModelForm):
+
+    decision = forms.ChoiceField(
+        choices=[
+            (
+                "continue",
+                "Continue to Inspector",
+            ),
+            (
+                "reject",
+                "Reject Complaint",
+            ),
+        ],
+        widget=forms.RadioSelect,
+        required=True,
+    )
+
+    class Meta:
+        model = Complaint
+        fields = [
+            "priority",
+        ]
+        widgets = {
+            "priority": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+        }
