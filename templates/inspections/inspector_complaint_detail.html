@@ -4,18 +4,18 @@
 
 <style>
 
-    .complaint-page {
+    .inspection-page {
         min-height: calc(100vh - 80px);
         background: #f5f7fa;
         padding: 40px 20px;
     }
 
-    .complaint-container {
+    .inspection-container {
         max-width: 900px;
         margin: auto;
     }
 
-    .complaint-card {
+    .page-card {
         background: white;
         border-radius: 12px;
         padding: 30px;
@@ -24,31 +24,22 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     }
 
-    .complaint-header {
-        border-left: 5px solid #ff9933;
-    }
-
-    .complaint-header h2 {
+    .page-card h2 {
         color: #12355b;
-        margin-bottom: 8px;
-    }
-
-    .complaint-header p {
-        color: #68737d;
-        margin: 0;
+        margin-bottom: 20px;
     }
 
     .section-title {
         color: #12355b;
         font-size: 18px;
         font-weight: 600;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
         border-bottom: 1px solid #e5e8eb;
+        padding-bottom: 10px;
+        margin-bottom: 18px;
     }
 
     .info-row {
-        margin-bottom: 14px;
+        margin-bottom: 12px;
     }
 
     .info-label {
@@ -80,6 +71,35 @@
         font-weight: 600;
     }
 
+    .action-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #12355b;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+    .action-btn:hover {
+        background: #0d2945;
+        color: white;
+    }
+
+    .back-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .back-btn:hover {
+        background: #5a6268;
+        color: white;
+    }
+
     .evidence-box {
         background: #f8fafc;
         border: 1px solid #e5e8eb;
@@ -90,33 +110,30 @@
 </style>
 
 
-<div class="complaint-page">
+<div class="inspection-page">
 
-    <div class="complaint-container">
+    <div class="inspection-container">
 
 
-        <!-- ==================================
-             HEADER
-             ================================== -->
+        <!-- Complaint Header -->
 
-        <div class="complaint-card complaint-header">
+        <div class="page-card">
 
             <h2>
                 Complaint #{{ complaint.id }}
             </h2>
 
             <p>
-                Review the complete details of the submitted complaint.
+                Review the complaint details before performing
+                the inspection.
             </p>
 
         </div>
 
 
-        <!-- ==================================
-             CITIZEN INFORMATION
-             ================================== -->
+        <!-- Citizen Information -->
 
-        <div class="complaint-card">
+        <div class="page-card">
 
             <div class="section-title">
                 Citizen Information
@@ -149,11 +166,9 @@
         </div>
 
 
-        <!-- ==================================
-             COMPLAINT INFORMATION
-             ================================== -->
+        <!-- Complaint Information -->
 
-        <div class="complaint-card">
+        <div class="page-card">
 
             <div class="section-title">
                 Complaint Information
@@ -186,18 +201,6 @@
             <div class="info-row">
 
                 <span class="info-label">
-                    Status:
-                </span>
-
-                <span class="status-badge">
-                    {{ complaint.get_status_display }}
-                </span>
-
-            </div>
-
-            <div class="info-row">
-
-                <span class="info-label">
                     Priority:
                 </span>
 
@@ -210,7 +213,19 @@
             <div class="info-row">
 
                 <span class="info-label">
-                    Reported On:
+                    Status:
+                </span>
+
+                <span class="status-badge">
+                    {{ complaint.get_status_display }}
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Submitted:
                 </span>
 
                 <span class="info-value">
@@ -222,11 +237,9 @@
         </div>
 
 
-        <!-- ==================================
-             LOCATION
-             ================================== -->
+        <!-- Location -->
 
-        <div class="complaint-card">
+        <div class="page-card">
 
             <div class="section-title">
                 Location
@@ -271,13 +284,11 @@
         </div>
 
 
-        <!-- ==================================
-             EVIDENCE
-             ================================== -->
+        <!-- Citizen Evidence -->
 
         {% if complaint.media %}
 
-            <div class="complaint-card">
+            <div class="page-card">
 
                 <div class="section-title">
                     Citizen Evidence
@@ -299,29 +310,23 @@
         {% endif %}
 
 
-        <!-- ==================================
-             ACTIONS
-             ================================== -->
+        <!-- Actions -->
 
-        <div class="complaint-card">
+        <div class="page-card">
 
-            <div class="mt-2 d-flex justify-content-between">
+            <a
+                href="{% url 'inspections:perform_inspection' complaint.id %}"
+                class="action-btn"
+            >
+                Perform Inspection
+            </a>
 
-                <a
-                    href="{% url 'complaints:supervisor_complaints' %}"
-                    class="btn btn-outline-secondary"
-                >
-                    Back to Complaints
-                </a>
-
-                <a
-                    href="{% url 'complaints:supervisor_complaint_review' complaint.id %}"
-                    class="btn btn-primary"
-                >
-                    Review Complaint
-                </a>
-
-            </div>
+            <a
+                href="{% url 'inspections:inspector_complaints' %}"
+                class="back-btn"
+            >
+                Back
+            </a>
 
         </div>
 

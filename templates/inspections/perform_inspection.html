@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    .inspection-page {
+        min-height: calc(100vh - 80px);
+        background: #f5f7fa;
+        padding: 40px 20px;
+    }
+
+    .inspection-container {
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .page-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        border: 1px solid #e1e6eb;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .page-card h2 {
+        color: #12355b;
+        margin-bottom: 8px;
+    }
+
+    .page-card > p {
+        color: #68737d;
+        margin-bottom: 25px;
+    }
+
+    .complaint-summary {
+        background: #f8fafc;
+        border: 1px solid #e5e8eb;
+        border-radius: 8px;
+        padding: 18px;
+        margin-bottom: 25px;
+    }
+
+    .complaint-summary p {
+        margin-bottom: 7px;
+        color: #68737d;
+    }
+
+    .complaint-summary strong {
+        color: #12355b;
+    }
+
+    .form-section {
+        margin-bottom: 22px;
+    }
+
+    .form-section label {
+        color: #12355b;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .form-check {
+        margin-bottom: 8px;
+    }
+
+    .submit-btn {
+        padding: 10px 22px;
+        background: #12355b;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background: #0d2945;
+    }
+
+    .cancel-btn {
+        display: inline-block;
+        padding: 10px 22px;
+        background: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-left: 8px;
+    }
+
+    .cancel-btn:hover {
+        background: #5a6268;
+        color: white;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+</style>
+
+
+<div class="inspection-page">
+
+    <div class="inspection-container">
+
+        <div class="page-card">
+
+            <h2>
+                Perform Inspection
+            </h2>
+
+            <p>
+                Submit your inspection findings for
+                Complaint #{{ complaint.id }}.
+            </p>
+
+
+            <!-- Complaint Summary -->
+
+            <div class="complaint-summary">
+
+                <p>
+                    <strong>Category:</strong>
+                    {{ complaint.category }}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    {{ complaint.description }}
+                </p>
+
+                <p>
+                    <strong>Location:</strong>
+                    {{ complaint.location.address }}
+                </p>
+
+                <p>
+                    <strong>Priority:</strong>
+                    {{ complaint.get_priority_display }}
+                </p>
+
+            </div>
+
+
+            <!-- Inspection Form -->
+
+            <form
+                method="post"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- Result -->
+
+                <div class="form-section">
+
+                    <label>
+                        Inspection Result
+                    </label>
+
+                    {{ form.result }}
+
+                    {% if form.result.errors %}
+
+                        <div class="error-message">
+                            {{ form.result.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Remarks -->
+
+                <div class="form-section">
+
+                    <label for="{{ form.remarks.id_for_label }}">
+                        Inspection Remarks
+                    </label>
+
+                    {{ form.remarks }}
+
+                    {% if form.remarks.errors %}
+
+                        <div class="error-message">
+                            {{ form.remarks.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Evidence -->
+
+                <div class="form-section">
+
+                    <label for="{{ form.evidence.id_for_label }}">
+                        Inspection Evidence
+                    </label>
+
+                    {{ form.evidence }}
+
+                    <small class="text-muted">
+                        Optional. Upload supporting evidence
+                        from the inspection.
+                    </small>
+
+                    {% if form.evidence.errors %}
+
+                        <div class="error-message">
+                            {{ form.evidence.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    Submit Inspection
+                </button>
+
+                <a
+                    href="{% url 'inspections:inspector_complaint_detail' complaint.id %}"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

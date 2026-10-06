@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+    .inspection-page {
+        min-height: calc(100vh - 80px);
+        background: #f5f7fa;
+        padding: 40px 20px;
+    }
+
+    .inspection-container {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .page-header {
+        background: white;
+        border-radius: 12px;
+        padding: 25px 30px;
+        margin-bottom: 25px;
+        border-left: 5px solid #ff9933;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-header h2 {
+        color: #12355b;
+        margin-bottom: 8px;
+    }
+
+    .page-header p {
+        color: #68737d;
+        margin: 0;
+    }
+
+    .complaint-card {
+        background: white;
+        border: 1px solid #e1e6eb;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 18px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .complaint-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
+    }
+
+    .complaint-title {
+        color: #12355b;
+        font-size: 20px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .complaint-title:hover {
+        color: #ff9933;
+    }
+
+    .complaint-info {
+        margin-top: 15px;
+    }
+
+    .complaint-info p {
+        margin-bottom: 7px;
+        color: #68737d;
+    }
+
+    .complaint-info strong {
+        color: #12355b;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 15px;
+        background: #fff3cd;
+        color: #856404;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .priority-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 15px;
+        background: #eef3f8;
+        color: #12355b;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .view-btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 9px 18px;
+        background: #12355b;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .view-btn:hover {
+        background: #0d2945;
+        color: white;
+    }
+
+    .empty-card {
+        background: white;
+        border: 1px solid #e1e6eb;
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        color: #68737d;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 20px;
+        color: #12355b;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+</style>
+
+
+<div class="inspection-page">
+
+    <div class="inspection-container">
+
+        <div class="page-header">
+
+            <h2>
+                Inspector Complaints
+            </h2>
+
+            <p>
+                Review complaints forwarded by the Supervisor
+                for inspection.
+            </p>
+
+        </div>
+
+
+        {% if complaints %}
+
+            {% for complaint in complaints %}
+
+                <div class="complaint-card">
+
+                    <a
+                        href="{% url 'inspections:inspector_complaint_detail' complaint.id %}"
+                        class="complaint-title"
+                    >
+                        Complaint #{{ complaint.id }}
+                    </a>
+
+                    <div class="complaint-info">
+
+                        <p>
+                            <strong>Category:</strong>
+                            {{ complaint.category }}
+                        </p>
+
+                        <p>
+                            <strong>Description:</strong>
+                            {{ complaint.description }}
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong>
+                            {{ complaint.location.address }}
+                        </p>
+
+                        <p>
+                            <strong>Priority:</strong>
+
+                            <span class="priority-badge">
+                                {{ complaint.get_priority_display }}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+
+                            <span class="status-badge">
+                                {{ complaint.get_status_display }}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Submitted:</strong>
+                            {{ complaint.created_at|date:"d M Y, h:i A" }}
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'inspections:inspector_complaint_detail' complaint.id %}"
+                        class="view-btn"
+                    >
+                        View Complaint
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+
+                <h4>
+                    No Complaints Available
+                </h4>
+
+                <p>
+                    There are currently no complaints
+                    waiting for inspection.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <a
+            href="{% url 'accounts:dashboard' %}"
+            class="back-btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

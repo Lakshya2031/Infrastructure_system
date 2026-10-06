@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load static %}
 
 {% block content %}
@@ -123,36 +124,36 @@
     }
 
     .feature-card {
-    padding: 20px;
-    border: 1px solid #e1e6eb;
-    border-top: 4px solid #ff9933;
-    border-radius: 10px;
-    background: white;
-    text-align: center;
-    display: block;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-}
+        padding: 20px;
+        border: 1px solid #e1e6eb;
+        border-top: 4px solid #ff9933;
+        border-radius: 10px;
+        background: white;
+        text-align: center;
+        display: block;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
 
-.feature-card:hover {
-    border-top-color: #12355b;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
-    transform: translateY(-2px);
-}
+    .feature-card:hover {
+        border-top-color: #12355b;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
+        transform: translateY(-2px);
+    }
 
-.feature-card h4 {
-    color: #12355b;
-    font-size: 17px;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
+    .feature-card h4 {
+        color: #12355b;
+        font-size: 17px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
 
-.feature-card p {
-    color: #68737d;
-    font-size: 13px;
-    margin: 0;
-}
+    .feature-card p {
+        color: #68737d;
+        font-size: 13px;
+        margin: 0;
+    }
 
     .feature-card h4 {
         color: #12355b;
@@ -349,8 +350,12 @@
 
                 {% elif dashboard_type == "Supervisor" %}
 
+                    <!-- REVIEW COMPLAINTS -->
 
-                    <div class="feature-card">
+                    <a
+                        href="{% url 'complaints:supervisor_complaints' %}"
+                        class="feature-card text-decoration-none"
+                    >
 
                         <h4>
                             Review Complaints
@@ -360,8 +365,10 @@
                             Review submitted complaints.
                         </p>
 
-                    </div>
+                    </a>
 
+
+                    <!-- ASSIGN WORK -->
 
                     <div class="feature-card">
 
@@ -408,7 +415,12 @@
                 {% elif dashboard_type == "Inspector" %}
 
 
-                    <div class="feature-card">
+                    <!-- INSPECTIONS -->
+
+                    <a
+                        href="{% url 'inspections:inspector_complaints' %}"
+                        class="feature-card text-decoration-none"
+                    >
 
                         <h4>
                             Inspections
@@ -418,8 +430,10 @@
                             Manage infrastructure inspections.
                         </p>
 
-                    </div>
+                    </a>
 
+
+                    <!-- QUALITY ASSURANCE -->
 
                     <div class="feature-card">
 
