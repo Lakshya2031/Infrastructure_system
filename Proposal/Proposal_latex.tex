@@ -1,0 +1,156 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\setstretch{1.08}
+\setlist{nosep}
+\hypersetup{
+    colorlinks=false,
+    hidelinks
+}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries Public Infrastructure Issue Resolution System with AI-Assisted Triage and Verification}\\[6pt]
+{\normalsize Project Proposal for Software Engineering Course Project}\\[12pt]
+\begin{tabular}{@{}ll@{}}
+Submitted to: & Dr. Anushka \\[2pt]
+Student Name: & Naitik Garg \\ 
+              & Shivesh \\
+              & Aditya Raj \\
+              & Lakshya Saraswat \\[2pt]
+Roll Number:  & 1024240052 \\
+              & 1024240047 \\
+              & 1024240050 \\
+              & 1024240064 \\[2pt]
+Branch: & B.Tech Artificial Intelligence and Machine Learning \\[2pt]
+Institute: & Thapar Institute of Engineering \& Technology (TIET), Patiala \\[2pt]
+Course: & Software Engineering Course Project \\[2pt]
+Submission Date: & 19 August 2026
+\end{tabular}
+\end{center}
+\vspace{6pt}
+
+\vspace{6pt}
+
+\section{1. Higher-order goal}
+This project aims to improve the efficiency and transparency of public infrastructure complaint handling by reducing delays between citizen reporting, municipal review, repair and verification. The immediate engineering objective is to build a complete, deployable software system that manages this workflow through a structured web application.
+
+The project is primarily a Software Engineering and information system project. AI is used internally as a supporting decision assistance component for routine triage and verification rather than as the central research objective.
+
+\section{2. Time-to-value and semester priority}
+The system will be developed incrementally, with the complete complaint workflow receiving priority over advanced AI or infrastructure features.
+
+The first implementation priority is citizen complaint submission and tracking, followed by the backend and database, role based access control, dynamic status workflow and audit history. The core AI functions will then be implemented and evaluated. Testing and Software Engineering documentation will be completed before optional enhancements.
+
+This approach ensures that the project remains a complete and demonstrable system even if secondary AI features, mobile support or cloud deployment are deferred.
+
+\section{3. Problem Statement}
+Citizens reporting public infrastructure problems such as potholes, damaged streetlights, water leakage and sanitation issues often have limited visibility into what happens after submission. Municipal staff may also rely on fragmented communication and manual processes for classification, prioritisation, assignment and repair verification.
+
+Common problems include duplicate complaints, inconsistent classification, unclear ownership, delayed assignment, weak status transparency and lack of an independent verification step after a repair is reported as completed.
+
+The proposed system addresses these problems by providing one structured workflow in which every complaint has a responsible role, a current state and a timestamped history from submission to closure.
+
+\section{4. Proposed Solution}
+The proposed system is a web based Public Infrastructure Issue Resolution System with citizen and staff interfaces.
+
+The citizen submits a complaint with description, location and optional photo or video evidence and receives a complaint identifier. The system performs initial validation and invokes an internal AI service.
+
+The core AI functionality consists of complaint classification, severity or priority prediction and duplicate complaint detection. AI results are presented to the Supervisor, who confirms or corrects them. Department recommendation is treated as secondary AI assistance rather than a separate major model.
+
+Normal complaints are assigned to a Technician and converted into work orders. The Technician performs the repair and submits completion information and before and after evidence. Where feasible, a lightweight AI repair verification function provides additional evidence for the Inspector. The Inspector performs final quality assurance and approves the work or requests rework.
+
+If a complaint appears suspicious, it is forwarded by the Supervisor to the Inspector. The Inspector decides whether it is rejected or allowed to continue. If continued, it follows the normal repair and closure workflow.
+
+The system contains five human actors: Citizen, Supervisor, Technician, Inspector and Administrator. AI is not an actor and has no independent authority to approve, reject, assign or close complaints.
+
+\section{5. Solution Approach}
+The system will use a simple layered web architecture consisting of a React frontend, FastAPI backend, internal Python AI service and PostgreSQL database. Local media storage will be used initially, with object storage treated as an optional extension.
+
+The backend will enforce authentication and role based access control. Citizens can manage their own complaints. Supervisors review AI analysis and assign Technicians. Technicians perform assigned repairs but cannot approve their own work. Inspectors handle suspicious complaint decisions and final quality assurance. Administrators manage users, roles, departments, categories and system configuration.
+
+The complaint state is dynamic and follows the lifecycle Submitted, AI Analyzed, Supervisor Review, Assigned or Sent to Inspector, Inspector Rejected or Continued, Work Order, In Progress, Completed, Final Inspection or Verification, Closed and Feedback.
+
+AIAnalysis will store AI predictions, scores, confidence values, timestamps and analysis type. StatusHistory will store actual complaint state transitions and the responsible human or authorised workflow action. AI analysis will not be treated as an actor in StatusHistory.
+
+The relational database will contain User, Role, Citizen, Supervisor, Technician, Inspector, Category, Department, Location, Complaint, Assignment, AIAnalysis, WorkOrder, Repair, Inspection, StatusHistory, Feedback and Notification. The design will keep User and Role relationships explicit without unnecessary over normalisation.
+
+\section{6. Evaluation Criterion}
+The primary evaluation will measure whether the complete complaint workflow operates correctly and consistently.
+
+The main evaluation areas are successful complaint submission, correct status transitions, correct role permissions, assignment and work order handling, repair completion, Inspector approval or rework, closure and audit history.
+
+The core AI functions will be evaluated separately. Classification will be evaluated using appropriate classification measures. Severity or priority prediction will be evaluated against labelled or rule based reference values where available. Duplicate detection will be evaluated using known duplicate pairs or manually reviewed test cases.
+
+Testing will include unit tests, integration tests for the complete complaint lifecycle, role and permission tests and database consistency tests. AI results will be evaluated as decision support and not as autonomous decisions.
+
+\section{7. Scalability and maintainability}
+The system should support growth in complaint volume without requiring a redesign of the workflow.
+
+The backend will use stateless REST APIs where appropriate, pagination for complaint lists and database indexing for common queries. The frontend and backend will remain separate so that each can be maintained independently.
+
+The AI service will be separated from the main backend through a stable internal interface. This allows a model to be improved or replaced without changing the overall complaint management workflow.
+
+The architecture will remain suitable for common web hosting and a managed relational database. Large scale cloud infrastructure is not required for the semester implementation.
+
+\section{8. Technology availability}
+The project will use mature and manageable technologies.
+
+Frontend: React.
+
+Backend: FastAPI and REST APIs.
+
+Database: PostgreSQL.
+
+AI: Python with scikit learn and lightweight supporting libraries.
+
+Authentication: JWT based authentication with role based access control.
+
+Media: Local storage during development and optional object storage later.
+
+Testing: Unit and integration testing.
+
+Version control: Git and GitHub.
+
+These technologies are selected to keep the project focused on workflow design, correctness, testing and Software Engineering practices rather than unnecessary infrastructure development.
+
+\section{9. Project Scope and Deliverables}
+The initial implementation will include citizen complaint submission, complaint identifier generation, location and media handling, AI assisted core triage, Supervisor review, Technician assignment, work order creation, repair progress, completion evidence, Inspector review, complaint closure, feedback and status history.
+
+The core AI deliverables are complaint classification, severity or priority prediction and duplicate complaint detection. Secondary AI assistance includes department recommendation, image relevance or authenticity checking and repair verification. These secondary functions may be implemented using lightweight models, rules or thresholds if time permits.
+
+The Software Engineering documentation will include requirements, Use Case model, DFD Level 0, DFD Level 1, ER model, Class Diagram, Activity Diagram, Sequence Diagram, Complaint State Diagram, Component Diagram, System Architecture and RBAC matrix.
+
+DFD Level 2 will be optional and will only be developed for one or two genuinely complex processes, preferably AI Analyze Complaint or Complaint Review and Assignment. Deployment documentation may be included as a simple deployment view rather than a production scale architecture.
+
+The project will be delivered primarily as a web application. Mobile application support, live Technician tracking, payment integration, multilingual NLP and advanced cloud infrastructure are optional future extensions.
+
+\section{10. Risks and Mitigation}
+AI scope is the main feasibility risk. This will be controlled by treating only classification, severity or priority prediction and duplicate detection as core AI commitments.
+
+Limited training data is another risk. Lightweight and practical models will be preferred over research level models, and evaluation will use clearly defined test cases and datasets.
+
+Workflow complexity will be controlled by implementing the complaint lifecycle first and adding secondary AI functions only after the main system is stable.
+
+Data privacy will be addressed by collecting only necessary information and restricting access according to role.
+
+Consistency between the workflow, database, status history and access control will be maintained throughout development so that the final implementation remains aligned with the proposal.
+
+\section{11. Summary}
+This project proposes a complete web based Public Infrastructure Issue Resolution System for managing public infrastructure complaints from citizen submission to verified closure and feedback.
+
+The system is primarily a Software Engineering project focused on workflow, database design, role based access control, auditability and maintainability. AI is an internal supporting component that assists with complaint classification, severity or priority prediction and duplicate detection, with secondary verification features added only if time permits.
+
+The system preserves human responsibility throughout the lifecycle. The Supervisor reviews and routes complaints, the Technician performs repairs, the Inspector makes rejection and quality assurance decisions, and the Administrator manages system governance. AI provides predictions and recommendations but cannot independently approve, reject, assign or close a complaint.
+
+The semester implementation will prioritise the complete complaint lifecycle, backend and database, RBAC, audit history, core AI functions, testing and documentation.
+
+\end{document}
